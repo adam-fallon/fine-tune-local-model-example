@@ -60,7 +60,18 @@ in pkgs.mkShell {
         make_venv
         activate_venv
         cd lit-parrot
-        install_torch_dev_cpu # or install_torch_dev_gpu
+        install_torch_dev_cpu
+        download_weights
+        convert_weights_to_parrot
+        create_checkpoints
+    }
+
+    setup_gpu() {
+        install_lit_parrot
+        make_venv
+        activate_venv
+        cd lit-parrot
+        install_torch_dev_gpu
         download_weights
         convert_weights_to_parrot
         create_checkpoints
