@@ -12,7 +12,8 @@ in pkgs.mkShell {
     export PYTHONPATH="$PIP_PREFIX/${pkgs.python3.sitePackages}:$PYTHONPATH"
     export PATH="$PIP_PREFIX/bin:$PATH"
     unset SOURCE_DATE_EPOCH
-    export PYTORCH_ENABLE_MPS_FALLBACK=1
+    # Uncomment this if you are using a CPU
+    # export PYTORCH_ENABLE_MPS_FALLBACK=1
 
     make_venv() {
         python -m venv .venv
