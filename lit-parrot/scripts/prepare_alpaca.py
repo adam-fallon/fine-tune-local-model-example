@@ -19,16 +19,19 @@ DATA_FILE_NAME = "alpaca_data_cleaned_archive.json"
 IGNORE_INDEX = -1
 
 
+DATA_FILE = "https://huggingface.co/datasets/databricks/databricks-dolly-15k/resolve/main/databricks-dolly-15k.jsonl"
+DATA_FILE_NAME = "dolly_data_cleaned_archive.json"
+
 def prepare(
-    destination_path: Path = Path("data/alpaca"),
-    checkpoint_dir: Path = Path("checkpoints/stabilityai/stablelm-base-alpha-3b"),
+    destination_path: Path = Path("data/dolly"),
+    checkpoint_dir: Path = Path("checkpoints/togethercomputer/RedPajama-INCITE-Base-3B-v1"),
     test_split_size: int = 2000,
     max_seq_length: int = 256,
     seed: int = 42,
     mask_inputs: bool = False,  # as in alpaca-lora
     data_file_name: str = DATA_FILE_NAME,
 ) -> None:
-    """Prepare the Alpaca dataset for instruction tuning.
+    """Prepare the Dolly dataset for instruction tuning.
 
     The output is a training and validation dataset saved as `train.pt` and `val.pt`,
     which stores the preprocessed and tokenized prompts and labels.
@@ -40,7 +43,11 @@ def prepare(
     tokenizer = Tokenizer(checkpoint_dir / "tokenizer.json", checkpoint_dir / "tokenizer_config.json")
 
     with open(file_path, "r") as file:
-        data = json.load(file)
+        data = file.readlines()
+        data = [json.loads(line) for line in data]
+    for item in data:
+        item["input"] = item.pop("context")
+        item["output"] = item.pop("response")
 
     # Partition the dataset into train and test
     train_split_size = len(data) - test_split_size
