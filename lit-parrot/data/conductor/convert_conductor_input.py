@@ -1,7 +1,7 @@
 import json
 
 # Open the input file for reading
-with open('conductor-tuning.jsonl', 'r') as file:
+with open('conductor_tuning.jsonl', 'r') as file:
     # Open the output file for writing
     with open('clean.json', 'w') as output_file:
         # Create a list to store the output entries
