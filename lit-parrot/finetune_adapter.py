@@ -48,10 +48,10 @@ def main(
     check_valid_checkpoint_dir(checkpoint_dir)
 
     fabric = L.Fabric(
-        accelerator="mps",
+        accelerator="cuda",
         devices=devices,
         strategy=(DeepSpeedStrategy(config=ds_config) if devices > 1 else "auto"),
-        precision="16-true",
+        precision="bf16-mixed",
     )
     fabric.launch()
     fabric.seed_everything(1337 + fabric.global_rank)
@@ -63,7 +63,7 @@ def main(
 
     config = Config.from_name(name=checkpoint_dir.name, block_size=max_seq_length)
 
-    with EmptyInitOnDevice(device=fabric.device, dtype=torch.float16):
+    with EmptyInitOnDevice(device=fabric.device, dtype=torch.bfloat16):
         model = Parrot(config)
     with lazy_load(checkpoint_dir / "lit_model.pth") as checkpoint:
         model.load_state_dict(checkpoint, strict=False)
