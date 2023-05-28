@@ -1,3 +1,5 @@
-lit-parrot/
+lit-parrot/data
+lit-parrot/checkpoints
+lit-parrot/out
 .venv
 _build

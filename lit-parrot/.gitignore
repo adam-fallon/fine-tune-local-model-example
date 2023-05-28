@@ -1,0 +1,11 @@
+__pycache__
+.idea
+.DS_Store
+*.egg-info
+build
+
+# data
+data
+checkpoints
+out
+wandb

@@ -56,6 +56,10 @@ in pkgs.mkShell {
         python finetune_adapter.py --data_dir data/dolly --checkpoint_dir checkpoints/togethercomputer/RedPajama-INCITE-Base-3B-v1        
     }
 
+    generate_adapter() {
+        python generate_adapter.py --adapter_path out/adapter/alpaca/iter-015999.pth --checkpoint_dir checkpoints/togethercomputer/RedPajama-INCITE-Base-3B-v1 --prompt "Who is the author of the Game of Thrones?"
+    }
+
     setup() {
         install_lit_parrot
         make_venv
