@@ -19,7 +19,7 @@ DATA_FILE_NAME = "alpaca_data_cleaned_archive.json"
 IGNORE_INDEX = -1
 
 
-DATA_FILE = "conductor_tuning.jsonl"
+DATA_FILE = "clean.json"
 DATA_FILE_NAME = "conductor_clean.json"
 
 def prepare(
